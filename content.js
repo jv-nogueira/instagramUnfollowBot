@@ -14,45 +14,85 @@ document.addEventListener("keydown", function(event) {
         standardMessage)
         var i=0
         var contadorUnfollow=0
+        var arrayArmazenarNameAndUsername = [];
         percorrer()
         function percorrer(){
             var profileReference = document.querySelectorAll('._aano')[0].children[0].children[0].children[i] // Referenciar cada perfil da lista
             var lastIndex = document.querySelectorAll('._aano')[0].children[0].children[0].children.length -1 // Referencia o last index da lista de perfis
             var lastElementIndex = document.querySelectorAll('._aano')[0].children[0].children[0].children[lastIndex] // Visualiza o last element do index da lista de perfis
-            var viewProfile = profileReference.scrollIntoView() // Este método rola a página para que o elemento fique vísivel 
-            var getUsername = profileReference.children[0].children[0].children[0].children[1].children[0].children[0].children[0].children[0].children[0].children[0].children[0].children[0].children[0].innerHTML // Pegar o username da lista
-            var usernamesPrompt = questionUsernames.slice(1, -1).split("', '")
-            var usernamesPermitidos = [usernamesPrompt][0]
+            var viewProfile = profileReference.scrollIntoView() // Rola a página para que o elemento fique vísivel 
+            var getUsernameOrName = profileReference.children[0].children[0].children[0].children[1].children[0].children[0]
+            var getName = getUsernameOrName.children[1].children[0].innerText // Pegar o nome da lista
+            var getUsername = getUsernameOrName.children[0].children[0].children[0].children[0].children[0].children[0].children[0].innerHTML // Pegar o username da lista
+            var getUsernameAndName = {getName, getUsername}
             var limiteContador = question;
-            var buttonUnfollow = profileReference.children[0].children[0].children[0].children[2].children[0].children[0] // Botão para deixar de seguir  
-            if(!usernamesPermitidos.includes(getUsername)){
-                viewProfile
-                if(contadorUnfollow < limiteContador){ // Limite de usernames que o bot vai deixar de seguir
-                    setTimeout(() => {
-                        buttonUnfollow.click()
+            var buttonUnfollow = profileReference.children[0].children[0].children[0].children[2].children[0].children[0] // Botão para deixar de seguir 
+            if(questionUsernames != null){
+                var usernamesPrompt = questionUsernames.slice(1, -1).split("', '")
+                var usernamesPermitidos = [usernamesPrompt][0]
+                if(!usernamesPermitidos.includes(getUsername)){
+                    viewProfile
+                    if(contadorUnfollow < limiteContador){ // Limite de usernames que o bot vai deixar de seguir
+                        arrayArmazenarNameAndUsername.push(getUsernameAndName)
                         setTimeout(() => {
-                            [...document.querySelectorAll('button')].find(el => el.textContent == "Deixar de seguir").click() // As duas opções são: 'Deixar de seguir' ou 'Cancelar'
-                            contadorUnfollow++
-                        },3000)
-                        setTimeout(() => {
-                            i++
-                            percorrer()
+                            buttonUnfollow.click()
+                            setTimeout(() => {
+                                [...document.querySelectorAll('button')].find(el => el.textContent == "Deixar de seguir").click() // As duas opções são: 'Deixar de seguir' ou 'Cancelar'
+                                contadorUnfollow++
+                            },3000)
+                            setTimeout(() => {
+                                i++
+                                percorrer()
+                            },5000)
                         },5000)
-                    },5000)
+                    }else{
+                        var removeWhiteSpace = limiteContador.replace(/\s/g, '')
+                        var singular = "" 
+                        var plural = ""
+                        if(limiteContador > 1){
+                            plural = "s"
+                        }else{
+                            singular = ""
+                        };
+                        var questionFinal = confirm('Chegou ao limite de '+removeWhiteSpace+' pessoa'+singular+plural+' que o bot deixou de seguir!\n\n'+
+                        "Deseja a lista com as pessoas que o bot deixou de seguir? Clique em 'Ok' ou aperte 'Enter' para o download do arquivo 'unfollowList.txt'"+
+                        standardMessage)
+                        if(questionFinal == true){
+                            // Criar o conteúdo do CSV
+                            var csvContent = "\uFEFFNome\tUsername\n";
+                            arrayArmazenarNameAndUsername.forEach(function (item) {
+                            csvContent += item.getName + "\t" + item.getUsername + "\n";
+                            });
+
+                            // Criar um Blob com o conteúdo do CSV
+                            var blob = new Blob([csvContent], { type: "text/txt" });
+
+                            // Criar um link para o Blob
+                            var link = document.createElement("a");
+                            link.href = window.URL.createObjectURL(blob);
+
+                            // Definir o nome do arquivo
+                            link.download = "unfollowList.txt";
+
+                            // Adicionar o link à página e clicar automaticamente para iniciar o download
+                            document.body.appendChild(link);
+                            link.click();
+
+                            // Remover o link da página
+                            document.body.removeChild(link);
+                        }
+                    };
+                }else if(i < lastIndex){
+                    i++
+                    percorrer()
                 }else{
-                    alert('Chegou ao limite de '+limiteContador+' pessoa(s) que o bot deixou de seguir!'+
-                    standardMessage)
-                };
-            }else if(i < lastIndex){
-                i++
-                percorrer()
-            }else{
-                setTimeout(() => {
-                    lastElementIndex.scrollIntoView()
                     setTimeout(() => {
-                        percorrer()
+                        lastElementIndex.scrollIntoView()
+                        setTimeout(() => {
+                            percorrer()
+                        },2000)
                     },2000)
-                },2000)
+                }
             }
         }
     }else if(typeof question == 'string' && question != 0){
@@ -63,7 +103,3 @@ document.addEventListener("keydown", function(event) {
         standardMessage)
     } 
 });
-
-// Próximo passo 1: Implementar click em 'Seguindo'
-// Inserir imagem do pop-up no README
-// Editar vídeo do projeto
