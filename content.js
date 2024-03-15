@@ -39,12 +39,12 @@ document.addEventListener("keydown", function(event) {
                             setTimeout(() => {
                                 [...document.querySelectorAll('button')].find(el => el.textContent == "Deixar de seguir").click() // As duas opções são: 'Deixar de seguir' ou 'Cancelar'
                                 contadorUnfollow++
-                            },3000)
+                            },getRandomSeconds(2))
                             setTimeout(() => {
                                 i++
                                 percorrer()
-                            },5000)
-                        },5000)
+                            },getRandomSeconds(4))
+                        },getRandomSeconds(4))
                     }else{
                         var removeWhiteSpace = limiteContador.replace(/\s/g, '')
                         var singular = "" 
@@ -90,8 +90,8 @@ document.addEventListener("keydown", function(event) {
                         lastElementIndex.scrollIntoView()
                         setTimeout(() => {
                             percorrer()
-                        },2000)
-                    },2000)
+                        },getRandomSeconds(1))
+                    },getRandomSeconds(1))
                 }
             }
         }
@@ -102,4 +102,11 @@ document.addEventListener("keydown", function(event) {
         alert('Digite um número acima de 0!'+
         standardMessage)
     } 
+
+
+    function getRandomSeconds(sum){
+        let sec222 = Math.random() * 2 + sum; // Multiplica um random number e soma 
+        sec222 =  parseFloat(sec222.toFixed(3))*1000; // Diminui para 3 casas decimais, converte de string para number e multiplica por 1000 que corresponde a 1 segundo
+        return sec222; // retorna o resultado aleatorio em segundos 
+    }
 });
