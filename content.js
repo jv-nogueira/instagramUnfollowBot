@@ -1,6 +1,7 @@
     // Detalhes importantes: Evitar utilizar o jQuery para referenciar os elementos e sim utilizar as propriedades do javascript vanilla mesmo
     // Exemplo: ao invés de $("[class='algumaCoisa']") utilizar document.querySelectorAll(".algumaCoisa")
     // O motivo é que as extensões estão apresentando mau funcionamento com o framework jQuery
+
 document.addEventListener("keydown", function(event) {
     var standardMessage = "\n\nSupport: jvnogueira2010@gmail.com";
     if (event.keyCode === 113) {
@@ -37,7 +38,12 @@ document.addEventListener("keydown", function(event) {
                         setTimeout(() => {
                             buttonUnfollow.click()
                             setTimeout(() => {
-                                [...document.querySelectorAll('button')].find(el => el.textContent == "Deixar de seguir").click() // As duas opções são: 'Deixar de seguir' ou 'Cancelar'
+                                if(document.location.href.includes('followers')){
+                                    var buttonFollowingOrFollowers = 'Remover' // As duas opções são: 'Remover' ou 'Cancelar'
+                                }else if(document.location.href.includes('following')){
+                                    var buttonFollowingOrFollowers = 'Deixar de seguir' // As duas opções são: 'Deixar de seguir' ou 'Cancelar'
+                                };
+                                [...document.querySelectorAll('button')].find(el => el.textContent == buttonFollowingOrFollowers).click()
                                 contadorUnfollow++
                             },getRandomSeconds(2))
                             setTimeout(() => {
