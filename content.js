@@ -4,9 +4,16 @@
 
 document.addEventListener("keydown", function(event) {
     var standardMessage = "\n\nSupport: jvnogueira2010@gmail.com";
-    if (event.keyCode === 113) {
-        var question = prompt("Digite no campo abaixo a quantidade de pessoas que o bot vai deixar de seguir (unfollow):*"+
-        standardMessage)
+    if(document.location.href.includes('followers')||document.location.href.includes('following')){
+        if (event.keyCode === 113) {
+            if(document.location.href.includes('followers')){
+                var promptUnfollow = 'remover dos seguidores' 
+            }else if(document.location.href.includes('following')){
+                var promptUnfollow = 'deixar de seguir (unfollow)' 
+            };
+            var question = prompt("Digite no campo abaixo a quantidade de pessoas que o bot vai "+promptUnfollow+":*"+
+            standardMessage)
+        }
     };
     if(question > 0){
         var questionUsernames = prompt("Digite no campo abaixo quais perfis quer que o bot ignore, ou seja, quer que permaneça seguindo.\n\n"+
@@ -60,8 +67,13 @@ document.addEventListener("keydown", function(event) {
                         }else{
                             singular = ""
                         };
-                        var questionFinal = confirm('Chegou ao limite de '+removeWhiteSpace+' pessoa'+singular+plural+' que o bot deixou de seguir!\n\n'+
-                        "Deseja a lista com as pessoas que o bot deixou de seguir? Clique em 'Ok' ou aperte 'Enter' para o download do arquivo 'unfollowList.txt'"+
+                        if(document.location.href.includes('followers')){
+                            var phraseUnfollow = "removeu dos seguidores"
+                        }else if(document.location.href.includes('following')){
+                            var phraseUnfollow = "deixou de seguir"
+                        }
+                        var questionFinal = confirm("Chegou ao limite de "+removeWhiteSpace+" pessoa"+singular+plural+" que o bot "+phraseUnfollow+"!\n\n"+
+                        "Deseja a lista com as pessoas que o bot "+phraseUnfollow+"? Se sim, clique em 'Ok' ou aperte 'Enter' para o download do arquivo 'unfollowList.txt'"+
                         standardMessage)
                         if(questionFinal == true){
                             // Criar o conteúdo do CSV
