@@ -11,7 +11,7 @@
         {
             "matches": ["<all_urls>"],
             "js": [
-                "jquery.js","content.js","README.md"
+                "content.js","README.md"
             ]
         }
     ]
