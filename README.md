@@ -13,12 +13,17 @@ Projeto de bot personalizado para deixar de seguir automaticamente na plataforma
 ![Visualização no navegador Edge da extensão instagramUnfollow](image/extensaoEdge.png)
 
 ### Configuração do bot no instagram
-1. Abrir o instagram e atualizar a página, clicando na tecla 'F5' localizada na parte superior do teclado
-2. Na aba do perfil do instagram, clicar em 'Seguindo' ou 'Seguidores' (conforme a imagem abaixo)
-3. Após a página estar totalmente carregada, clique na tecla 'F2'
-4. Ao abrir a mensagem de pop-up (conforme a imagem abaixo), insira a quantidade de seguidores que o bot vai 'Deixar de seguir' ou 'Remover' e clique em 'Ok' ou aperte 'Enter'
-5. Insira quantos segundos para durar cada ciclo de intervalo de tempo entre cada unfollow
-6. Insira quais usernames para o bot evitar o unfollow e clique em 'Ok' ou aperte 'Enter'
+1. Antes de qualquer coisa, abra o arquivo (usernames.txt) e crie a lista com o username de todos os perfis do instagram para o bot não 'Remover' ou 'Deixar de seguir'.  Exemplo:
+  - ashicortes
+  - bellatentacao.calcados
+  - balnearioemacao
+  
+    Ou seja, pule uma linha para cada username, se preferir pode copiar e colar de uma planilha. Em seguida, salve em 'Arquivo > Salvar' ou clique nas teclas 'Ctrl + S'. Sempre que atualizar este arquivo, salve, atualizar a extensão e atualizar a página do facebook.
+2. Abrir o instagram e atualizar a página, clicando na tecla 'F5' localizada na parte superior do teclado
+3. Na aba do perfil do instagram, clicar em 'Seguindo' ou 'Seguidores' (conforme a imagem abaixo)
+4. Após a página estar totalmente carregada, clique na tecla 'F2'
+5. Ao abrir a mensagem de pop-up (conforme a imagem abaixo), insira a quantidade de seguidores que o bot vai 'Deixar de seguir' ou 'Remover' e clique em 'Ok' ou aperte 'Enter'
+6. Insira quantos segundos para durar cada ciclo de intervalo de tempo entre cada unfollow
 7. O bot vai parar o funcionamento automaticamente nesses casos: ao atingir o limite de usernames que deixou de seguir ou removeu, quando sair da tela de funcionamento ou quando o bot percorrer todos os perfis. O bot vai voltar a funcionar quando clicar em 'F2' novamente
 8. Ao atingir o limite de usernames, então vai aparecer a mensagem em pop-up perguntando se deseja realizar o download do arquivo (unfollowList.txt) que contêm o nome e username que o bot deixou de seguir ou removeu. É uma ótima maneira para revisar os perfis. Para quem quer algo ainda mais organizado, o bloco de notas em txt já vai estar com os dados espaçados, permitindo que ao copiar e colar em uma planilha fiquem organizados em colunas "Nome" e "Username"
 9. Não há necessidade de utilizar o editor de código para configurar o bot, mas quem estiver interessado em contribuir realizando implementações, fique a vontade. Não se esqueça de dar uma estrela ao projeto

@@ -3,6 +3,7 @@
     "name": "instagramUnfollow",
     "description": "",
     "version": "0.1",
+    "permissions": ["activeTab"],
     "icons": { 
         "48": "icons/instagram.png"
 },
@@ -11,8 +12,11 @@
         {
             "matches": ["<all_urls>"],
             "js": [
-                "content.js","README.md"
+                "content.js"
             ]
         }
-    ]
+    ],
+    "web_accessible_resources": [
+        "usernames.txt"
+      ]
 }

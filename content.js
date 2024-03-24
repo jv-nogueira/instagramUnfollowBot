@@ -1,4 +1,7 @@
 document.addEventListener("keydown", function(event) {
+    fetch(chrome.runtime.getURL('usernames.txt'))
+    .then(response => response.text())
+    .then(permitidosUsername => {
     var standardMessage = "\n\nSupport: jvnogueira2010@gmail.com";
     if(document.location.href.includes('followers')||document.location.href.includes('following')){
         if (event.keyCode === 113) {
@@ -16,10 +19,12 @@ document.addEventListener("keydown", function(event) {
         standardMessage)
         if(!isNaN(questionTemp) && questionTemp > 10){
             var answerTemp = questionTemp/2 // Pega a resposta do prompt e divide por 2 para dividir igualmente os segundos entre os intervalos
+            /*
             var questionUsernames = prompt("Digite no campo abaixo quais perfis quer que o bot ignore, ou seja, quer que permaneça seguindo.\n\n"+
             "Exemplo: 'username1', 'username2', 'username3'\n\n"+
             "Preste atenção aos detalhes da vírgula e das aspas, caso contrário, o bot não vai funcionar corretamente."+
             standardMessage)
+            */
             var i=0
             var contadorUnfollow=0
             var arrayArmazenarNameAndUsername = [];
@@ -37,10 +42,10 @@ document.addEventListener("keydown", function(event) {
                 var getUsernameAndName = {getName, getUsername}
                 var limiteContador = question;
                 var buttonUnfollow = profileReference.children[0].children[0].children[0].children[2].children[0].children[0] // Botão para deixar de seguir 
-                if(questionUsernames != null){
-                    var usernamesPrompt = questionUsernames.slice(1, -1).split("', '")
-                    var usernamesPermitidos = [usernamesPrompt][0]
-                    if(!usernamesPermitidos.includes(getUsername)){
+               // if(questionUsernames != null){
+                    // var usernamesPrompt = questionUsernames.slice(1, -1).split("', '")
+                    // var usernamesPermitidos = [usernamesPrompt][0]
+                    if(!permitidosUsername.includes(getUsername)){
                             viewProfile 
                         if(contadorUnfollow < limiteContador){ // Limite de usernames que o bot vai deixar de seguir
                             arrayArmazenarNameAndUsername.push(getUsernameAndName)
@@ -82,25 +87,20 @@ document.addEventListener("keydown", function(event) {
                                 arrayArmazenarNameAndUsername.forEach(function (item) {
                                 csvContent += item.getName + "\t" + item.getUsername + "\n";
                                 });
-
                                 // Criar um Blob com o conteúdo do CSV
                                 var blob = new Blob([csvContent], { type: "text/txt" });
-
                                 // Criar um link para o Blob
                                 var link = document.createElement("a");
                                 link.href = window.URL.createObjectURL(blob);
-
                                 // Definir o nome do arquivo
                                 link.download = "unfollowList.txt";
-
                                 // Adicionar o link à página e clicar automaticamente para iniciar o download
                                 document.body.appendChild(link);
                                 link.click();
-
                                 // Remover o link da página
                                 document.body.removeChild(link);
                             }
-                            },getRandomSeconds(1))
+                            },getRandomSeconds(answerTemp))
                         };
                     }else if(i < lastIndex){
                         i++
@@ -113,20 +113,20 @@ document.addEventListener("keydown", function(event) {
                             },getRandomSeconds(1))
                         },getRandomSeconds(1))
                     }
-                }
+                // }
             }
         }else if(questionTemp <= 10){
-            var numberTen = alert('Digite um número acima de 10!'+
+            alert('Digite um número acima de 10!'+
             standardMessage)
         }else if(typeof questionTemp == 'string'){
-            var withoutString = alert('Digite apenas números!'+
+            alert('Digite apenas números!'+
             standardMessage)
         }; 
         }else if(typeof question == 'string' && question != 0){
-            var numberOnly = alert('Digite apenas números!'+
+            alert('Digite apenas números!'+
             standardMessage)
         }else if(question == 0){
-            var numberZero = alert('Digite um número acima de 0!'+
+            alert('Digite um número acima de 0!'+
             standardMessage)
         }; 
 
@@ -136,3 +136,4 @@ function getRandomSeconds(sum){
     return sec222; // retorna o resultado aleatorio em segundos 
 };
 });
+})
